@@ -2,9 +2,12 @@ package com.ticketon.service.impl;
 
 import com.ticketon.dto.UserDTO;
 import com.ticketon.service.UserService;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl extends AbstractMapService<UserDTO, String> implements UserService {
 
     @Override
@@ -19,7 +22,7 @@ public class UserServiceImpl extends AbstractMapService<UserDTO, String> impleme
 
     @Override
     public List<UserDTO> findAll() {
-        return findAll();
+        return super.findAll();
     }
 
     @Override
