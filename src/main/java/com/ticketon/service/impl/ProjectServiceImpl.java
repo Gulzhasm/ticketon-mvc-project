@@ -1,6 +1,7 @@
 package com.ticketon.service.impl;
 
 import com.ticketon.dto.ProjectDTO;
+import com.ticketon.enums.Status;
 import com.ticketon.service.ProjectService;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,9 @@ import java.util.List;
 public class ProjectServiceImpl extends AbstractMapService<ProjectDTO, String> implements ProjectService {
     @Override
     public ProjectDTO save(ProjectDTO object) {
+        if (object.getProjectStatus() == null) {
+            object.setProjectStatus(Status.OPEN);
+        }
         return super.save(object.getProjectCode(), object);
     }
 
@@ -31,5 +35,11 @@ public class ProjectServiceImpl extends AbstractMapService<ProjectDTO, String> i
     @Override
     public void deleteById(String id) {
         super.deleteById(id);
+    }
+
+    @Override
+    public void complete(ProjectDTO projectDTO) {
+        projectDTO.setProjectStatus(Status.COMPLETE);
+        super.save(projectDTO.getProjectCode(), projectDTO);
     }
 }
