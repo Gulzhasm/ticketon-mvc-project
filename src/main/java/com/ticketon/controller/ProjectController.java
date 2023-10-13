@@ -1,11 +1,14 @@
 package com.ticketon.controller;
 
 import com.ticketon.dto.ProjectDTO;
+import com.ticketon.dto.UserDTO;
 import com.ticketon.service.ProjectService;
 import com.ticketon.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -60,6 +63,14 @@ public class ProjectController {
     public String updateProject(ProjectDTO project) {
         projectService.update(project);
         return "redirect:/project/create";
+    }
+
+    @GetMapping("/manager/project-status")
+    public String getProjectByManager(Model model){
+        UserDTO manager = userService.findById("john@ticketon.com");
+        List<ProjectDTO> projects = projectService.getCountedListOfProjectDTO(manager);
+        model.addAttribute("projects", projects);
+        return "/manager/project-status";
     }
 
 }

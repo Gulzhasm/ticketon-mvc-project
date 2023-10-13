@@ -1,6 +1,7 @@
 package com.ticketon.service.impl;
 
 import com.ticketon.dto.TaskDTO;
+import com.ticketon.dto.UserDTO;
 import com.ticketon.enums.Status;
 import com.ticketon.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl extends AbstractMapService<TaskDTO, Long> implements TaskService {
@@ -53,5 +55,10 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO, Long> implement
     @Override
     public void deleteById(Long id) {
         super.deleteById(id);
+    }
+
+    @Override
+    public List<TaskDTO> findTasksByManager(UserDTO manager) {
+        return findAll().stream().filter(user -> user.getAssignedEmployee().equals(manager)).collect(Collectors.toList());
     }
 }
